@@ -35,3 +35,11 @@ public byte8:
 pull block      side 1 [1]
 out pins 8      side 0 [1]
 jmp byte8
+
+% c-sdk
+{
+    static inline void parallel_lcd_program(PIO pio, uint sm, uint offset)
+    {
+        ;
+    }
+}
