@@ -1,0 +1,37 @@
+; side set pin should be WRX LCD (on the rising edge read value from D[0-15])
+; data order is as follows D0 - LSB, D15 - MSB
+; picture data is as follows green - MSB(Bit 5) LSB(Bit 0), Red and blue MSB(Bit4) LSB(Bit0)
+;   MSB BIT
+;   D15  |  R byte 4
+;   D14  |  R byte 3
+;   D13  |  R byte 2
+;   D12  |  R byte 1
+;   D11  |  R byte 0
+;   D10  |  G byte 5
+;   D09  |  G byte 4
+;   D08  |  G byte 3
+;   D07  |  G byte 2
+;   D06  |  G byte 1
+;   D05  |  G byte 0
+;   D04  |  B byte 4
+;   D03  |  B byte 3
+;   D02  |  B byte 2
+;   D01  |  B byte 1
+;   D00  |  B byte 0
+;   LSB BIT
+
+; pio set pins from LSB(pin0) to MSB(pin0 + 15)
+
+.program parallel_lcd
+
+.side_set 1 opt
+
+public byte16:
+pull block      side 1 [1]
+out pins 16     side 0 [1]
+jmp byte16
+
+public byte8:
+pull block      side 1 [1]
+out pins 8      side 0 [1]
+jmp byte8
