@@ -38,8 +38,13 @@ jmp byte8
 
 % c-sdk
 {
-    static inline void parallel_lcd_program(PIO pio, uint sm, uint offset)
-    {
-        ;
-    }
+static inline void parallel_lcd_program(PIO pio, uint sm, uint offset)
+{
+    pio_gpio_init(pio, 16);
+    pio_sm_set_consecutive_pindirs(pio, sm, 6, 17, true); // 16 bit data and WRX(lcd reads bits on rising edge WRX pin)
+    pio_sm_config c = blink_program_get_default_config(offset);
+    sm_config_set_sideset_pins(&c, 18);
+    sm_config_set_set_pins(&c, 16, 2);
+    pio_sm_init(pio, sm, offset, &c);
+}
 }
